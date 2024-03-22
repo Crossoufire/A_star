@@ -5,7 +5,7 @@ from matplotlib.patches import RegularPolygon
 
 
 class Node:
-    """ Class represnenting a node in the A* algorythm """
+    """ Class representing a Node in the A* algorithm """
 
     def __init__(self, x_pos: int, y_pos: int):
         self.x = x_pos
@@ -57,6 +57,8 @@ class GridNodes:
 
 
 class A_Star:
+    """ Class responsible for executing the A* algorithm """ 
+    
     EDGE_COLOR = "k"
     SQUARE_COLOR = "gray"
     BLOC_NODE = "k"
@@ -65,7 +67,7 @@ class A_Star:
     END_NODE = "tab:green"
     CLOSED_COLOR = "tab:red"
 
-    def __init__(self, grid_nodes: GridNodes, start_node, end_node):
+    def __init__(self, grid_nodes: GridNodes, start_node: Node, end_node: Node):
         self.grid_nodes = grid_nodes
         self.start_node = start_node
         self.end_node = end_node
@@ -120,7 +122,7 @@ class A_Star:
         plt.show()
 
     def _on_key_press(self, event):
-        """ If event is spacebar """
+        """ If the event key is spacebar: launch the algorithm """
 
         if event.key == " " and self.A_started is False:
             self.A_started = True
@@ -214,7 +216,7 @@ class A_Star:
         self.fig.canvas.draw()
 
     def run_A_star(self) -> Node:
-        """ Run the actual algorithm """
+        """ Run the algorithm """
 
         self.openList.append(start_node)
 
@@ -243,7 +245,6 @@ class A_Star:
                 # Calculate <g_cost> from start
                 valid_node.g_cost = current_node.g_cost + get_distance(current_node, valid_node)
 
-
                 # Calculate <h_cost> to end
                 valid_node.h_cost = get_distance(valid_node, end_node)
 
@@ -253,7 +254,7 @@ class A_Star:
 
             self.iter_ += 1
 
-        print("No valid path found snif :(.")
+        print("No valid path found :(.")
 
 
 def get_distance(current_node: Node, valid_node: Node):
@@ -265,7 +266,7 @@ def get_distance(current_node: Node, valid_node: Node):
 if __name__ == "__main__":
     grid_nodes = GridNodes(15, 15)
 
-    start_node: Node = Node(2, 2)
+    start_node = Node(2, 2)
     end_node = Node(12, 12)
 
     A_Star(grid_nodes, start_node, end_node)
